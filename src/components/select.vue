@@ -3,12 +3,16 @@
     >{{ selectProps.label }}
     <span class="text-require" v-if="selectProps.required">*</span></label
   >
-  <select class="form-select" id="{{selectProps.id}}" :value="selectValue">
+  <select
+    class="form-select"
+    @input="$emit('update:selectValue', $event.target.value)"
+    id="{{selectProps.id}}"
+    :value="selectValue"
+  >
     <option
       v-for="option in selectProps.options"
       :key="option.key"
       :value="option.value"
-      @input="$emit('update:selectValue', $event.target.value)"
     >
       {{ option.name }}
     </option>

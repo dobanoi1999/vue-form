@@ -8,7 +8,7 @@
       :min="min"
       :max="max"
       step="500"
-      v-model="range"
+      :value="valueRange"
       @input="onRangeChange"
     />
     <div class="range-background">
@@ -17,7 +17,7 @@
     <div class="text-range">
       <div class="flex">
         <span> &lt; </span>
-        <span>${{ range }}</span>
+        <span>${{ valueRange }}</span>
         <span> > </span>
       </div>
     </div>
@@ -25,7 +25,7 @@
 </template>
     
     <script >
-import { ref } from "vue";
+import { onMounted } from "vue";
 
 export default {
   name: "range-vue",
@@ -33,16 +33,14 @@ export default {
     rangeProps: {
       id: String,
       label: String,
-      required: Boolean,
     },
+    valueRange: String,
   },
-  setup() {
-    const range = ref("1000");
+  setup(props, context) {
     const min = 1000;
     const max = 10000;
-
-    const onRangeChange = (e) => {
-      let percent = ((+e.target.value - min) / (max - min)) * 100;
+    const setPositionTextValue = (value) => {
+      let percent = ((+value - min) / (max - min)) * 100;
       let sliderThumb = document.getElementsByClassName("text-range")[0];
       let background = document.querySelector(".range-background");
 
@@ -55,9 +53,15 @@ export default {
         }%, transparent 100% )`;
       }
     };
-    return {
-      range,
+    const onRangeChange = (e) => {
+      setPositionTextValue(e.target.value);
+      context.emit("update:valueRange", e.target.value);
+    };
 
+    onMounted(() => {
+      setPositionTextValue(props.valueRange);
+    });
+    return {
       min,
       max,
       onRangeChange,

@@ -1,0 +1,22 @@
+.form-label {
+    text-transform: uppercase;
+    font-weight: bold;
+}
+
+
+
+.text-require,
+.error-message {
+    color: red;
+    font-size: small;
+
+    transition: all 0.3s ease-in-out;
+}
+
+.error-message {
+    opacity: 0;
+}
+
+.error-message.show-error {
+    opacity: 1;
+}

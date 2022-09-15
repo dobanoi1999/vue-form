@@ -10,6 +10,7 @@
     :id="inputProps.id"
     :value="valueInput"
     @input="$emit('update:valueInput', $event.target.value)"
+    v-bind="$attrs"
   />
   <div>
     <span class="error-message" :class="errorMessage ? 'show-error' : ''">{{
