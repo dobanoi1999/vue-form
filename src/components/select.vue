@@ -1,12 +1,14 @@
 <template>
   <label for="{{selectProps.id}}" class="form-label"
-    >{{ selectProps.label }} <span v-if="selectProps.required">*</span></label
+    >{{ selectProps.label }}
+    <span class="text-require" v-if="selectProps.required">*</span></label
   >
-  <select class="form-select" id="{{selectProps.id}}">
+  <select class="form-select" id="{{selectProps.id}}" :value="selectValue">
     <option
       v-for="option in selectProps.options"
       :key="option.key"
-      value="option.value"
+      :value="option.value"
+      @input="$emit('update:selectValue', $event.target.value)"
     >
       {{ option.name }}
     </option>
@@ -24,12 +26,10 @@ export default {
 
       options: Array,
     },
+    selectValue: String,
   },
 };
 </script>
   
   <style scoped>
-.form-label span {
-  color: red;
-}
 </style>

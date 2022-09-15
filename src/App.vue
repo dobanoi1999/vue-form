@@ -14,7 +14,7 @@
 </template>
 
 <script>
-import Form from "./components/form.vue";
+import Form from "./components/formVue.vue";
 
 export default {
   name: "App",
@@ -27,11 +27,27 @@ export default {
   padding: 0;
   margin: 0;
 }
-
+.form-label {
+  text-transform: uppercase;
+  font-weight: bold;
+}
 img {
   width: auto;
   height: 100vh;
   object-fit: cover;
+}
+.text-require,
+.error-message {
+  color: red;
+  font-size: small;
+
+  transition: all 0.3s ease-in-out;
+}
+.error-message {
+  opacity: 0;
+}
+.error-message.show-error {
+  opacity: 1;
 }
 </style>
 

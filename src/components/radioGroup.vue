@@ -1,7 +1,7 @@
 <template>
-  <label for="{{radioGroupProps.id}}" class="form-label"
+  <label class="form-label"
     >{{ radioGroupProps.label }}
-    <span v-if="radioGroupProps.required">*</span></label
+    <span class="text-require" v-if="radioGroupProps.required">*</span></label
   >
 
   <div>
@@ -13,10 +13,12 @@
       <input
         class="form-check-input"
         type="radio"
-        id="item.key"
-        value="item.value"
+        :id="item.value"
+        :value="item.value"
+        :checked="item.value === valueRadio"
+        @input="$emit('update:valueRadio', $event.target.value)"
       />
-      <label class="form-check-label" for="item.key">{{ item.name }}</label>
+      <label class="form-check-label" :for="item.value">{{ item.name }}</label>
     </div>
   </div>
 </template>
@@ -29,6 +31,9 @@ export default {
       radios: Array,
       label: String,
       required: Boolean,
+    },
+    valueRadio: {
+      type: String,
     },
   },
 };
