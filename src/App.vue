@@ -9,7 +9,7 @@
             src="./assets/img/bg.jpeg"
           />
         </div>
-        <div class="col-8 p-4"><Form /></div>
+        <div class="col-8"><Form /></div>
       </div>
     </div>
   </div>
@@ -18,7 +18,6 @@
 <script>
 import Form from "./components/formVue.vue";
 import "./assets/css/global.css";
-import "./assets/css/resetcss.css";
 
 export default {
   name: "App",

@@ -1,64 +1,50 @@
 <template >
-  <form class="row g-5" @submit.prevent="submitForm" autocomplete="off">
-    <div class="col-6">
-      <div class="p-3">
+  <div class="h-100 d-flex align-items-center justify-content-center">
+    <form
+      class="row gx-5 gy-4 form"
+      @submit.prevent="submitForm"
+      autocomplete="off"
+    >
+      <div class="col-6">
         <Input
           :inputProps="propertyList.firstName"
           :valueInput="formData.firstName"
-          @update:valueInput="formData.firstName = $event"
+          @update:valueInput="formData.firstName = $event.target.value"
           :errorMessage="v$?.firstName?.$errors[0]?.$message"
         />
-        {{ v$._value?.email.$error }}
       </div>
-      <div class="p-3">
-        <Input
-          :inputProps="propertyList.lastName"
-          :valueInput="formData.lastName"
-          @update:valueInput="formData.lastName = $event"
-          :errorMessage="v$?.lastName?.$errors[0]?.$message"
-        />
-      </div>
-      <div class="p-3">
-        <Input
-          :inputProps="propertyList.company"
-          :valueInput="formData.company"
-          @update:valueInput="formData.company = $event"
-          :errorMessage="v$?.company?.$errors[0]?.$message"
-        />
-      </div>
-      <div class="p-3">
-        <Input
-          :inputProps="propertyList.email"
-          :valueInput="formData.email"
-          @update:valueInput="formData.email = $event"
-          :errorMessage="v$?.email?.$errors[0]?.$message"
-        />
-      </div>
-      <div class="p-3">
-        <Input
-          :inputProps="propertyList.phone"
-          :valueInput="formData.phone"
-          @update:valueInput="formData.phone = $event"
-          :errorMessage="v$?.phone?.$errors[0]?.$message"
-        />
-      </div>
-    </div>
-    <div class="col-6">
-      <div class="p-3">
+      <div class="col-6">
         <Select
           :selectProps="propertyList.gender"
           :selectValue="formData.gender"
-          @update:selectValue="formData.gender = $event"
+          @update:selectValue="formData.gender = $event.target.value"
         />
       </div>
-      <div class="p-3">
+      <div class="col-6">
+        <Input
+          :inputProps="propertyList.lastName"
+          :valueInput="formData.lastName"
+          @update:valueInput="formData.lastName = $event.target.value"
+          :errorMessage="v$?.lastName?.$errors[0]?.$message"
+        />
+      </div>
+      <div class="col-6">
         <RadioGroup
           :radioGroupProps="propertyList.payment"
           :valueRadio="formData.payment"
-          @update:valueRadio="formData.payment = $event"
+          @update:valueRadio="formData.payment = $event.target.value"
+          class="form-item-payment"
         />
       </div>
-      <div class="p-3">
+      <div class="col-6">
+        <Input
+          :inputProps="propertyList.company"
+          :valueInput="formData.company"
+          @update:valueInput="formData.company = $event.target.value"
+          :errorMessage="v$?.company?.$errors[0]?.$message"
+        />
+      </div>
+      <div class="col-6">
         <Input
           :inputProps="propertyList.cardNumber"
           :valueInput="formData.cardNumber"
@@ -68,54 +54,93 @@
           maxlength="19"
         />
       </div>
-      <div class="p-3">
+      <div class="col-6">
+        <Input
+          :inputProps="propertyList.email"
+          :valueInput="formData.email"
+          @update:valueInput="formData.email = $event.target.value"
+          :errorMessage="v$?.email?.$errors[0]?.$message"
+        />
+      </div>
+      <div class="col-6">
+        <label for="expiration" class="form-label">
+          expiration
+          <span class="text-require">*</span>
+        </label>
+        <Datepicker
+          id="expiration"
+          v-model="formData.expiration"
+          textInput
+          monthPicker
+          autoApply
+          placeholder="MM/YY"
+          format="MM/yy"
+          inputClassName="form-control form-control-lg"
+        ></Datepicker>
+        <div>
+          <span
+            class="error-message"
+            :class="v$?.expiration?.$errors[0]?.$message ? 'show-error' : ''"
+          >
+            {{ v$?.expiration?.$errors[0]?.$message }}
+          </span>
+        </div>
+      </div>
+      <div class="col-6">
+        <Input
+          :inputProps="propertyList.phone"
+          :valueInput="formData.phone"
+          @update:valueInput="formData.phone = $event.target.value"
+          :errorMessage="v$?.phone?.$errors[0]?.$message"
+        />
+      </div>
+      <div class="col-6">
         <Input
           :inputProps="propertyList.cvn"
           :valueInput="formData.cvn"
-          @update:valueInput="formData.cvn = $event"
+          @update:valueInput="formData.cvn = $event.target.value"
           :errorMessage="v$?.cvn?.$errors[0]?.$message"
           maxlength="3"
         />
       </div>
 
-      <div class="p-3">
-        <Input
-          :inputProps="propertyList.expiration"
-          :valueInput="formData.expiration"
-          @update:valueInput="formatExpiration"
-          :errorMessage="v$?.expiration?.$errors[0]?.$message"
-          maxlength="5"
-        />
-      </div>
-    </div>
-    <div class="col-12">
-      <div class="p-3">
+      <div class="col-12 py-4">
         <Range
           :rangeProps="propertyList.range"
           :valueRange="formData.donate"
           @update:valueRange="formData.donate = $event"
         />
       </div>
-    </div>
-    <div class="col-12">
-      <div class="d-flex justify-content-end">
-        <div class="p-2">
-          <button type="submit" class="btn btn-primary px-3 py-2">
-            Submit
-          </button>
-        </div>
-        <div class="p-2">
-          <button
-            type="button"
-            @click="resetForm"
-            class="btn btn-outline-secondary px-3 py-2"
-          >
-            Reset
-          </button>
+      <div class="col-12">
+        <div class="d-flex justify-content-end">
+          <div class="row gx-4">
+            <div class="col">
+              <button
+                type="submit"
+                class="btn btn-success btn-lg py-3 px-5 text-uppercase"
+              >
+                Submit
+              </button>
+            </div>
+            <div class="col">
+              <button
+                type="button"
+                @click="resetForm"
+                class="
+                  btn btn-outline-secondary btn-lg
+                  py-3
+                  px-5
+                  text-uppercase
+                "
+              >
+                Reset
+              </button>
+            </div>
+          </div>
         </div>
       </div>
-    </div>
-  </form>
+    </form>
+  </div>
 </template>
    
 <script setup>
@@ -126,6 +151,8 @@ import Range from "./range.vue";
 import { computed, ref } from "vue";
 import { required, email, helpers, minLength } from "@vuelidate/validators";
 import useVuelidate from "@vuelidate/core";
+import Datepicker from "@vuepic/vue-datepicker";
+import "@vuepic/vue-datepicker/dist/main.css";
 
 const initFormData = {
   firstName: "",
@@ -134,14 +161,14 @@ const initFormData = {
   email: "",
   phone: "",
   cvn: "",
-  expiration: "",
+  expiration: null,
   cardNumber: "",
   gender: "female",
   payment: "mastercard",
   donate: "1000",
 };
 const formLocal = localStorage.getItem("formValue");
-console.log(JSON.parse(formLocal));
+
 const formData = ref(formLocal ? JSON.parse(formLocal) : initFormData);
 
 const rules = computed(() => {
@@ -174,23 +201,14 @@ const rules = computed(() => {
     },
     expiration: {
       required: helpers.withMessage("Expiration is required", required),
-      validExpiration: helpers.withMessage("Expiration is not valid", (e) => {
-        if (e.length < 5) return false;
-        const day = +e.slice(0, 2);
-
-        if (day < 0 || day > 12) return false;
-        return true;
-      }),
       validateExpiration: helpers.withMessage("Card expired", (e) => {
-        if (e.length < 5) return true;
+        const currentYear = new Date().getFullYear();
+        const currentMoth = new Date().getMonth();
+        const year = e.year;
+        const month = e.month + 1;
+        if (year < currentYear) return false;
 
-        const currentYear = new Date().getFullYear().toString().slice(-2);
-        const currentMoth = new Date().getMonth().toString();
-        const year = +e.slice(-2);
-        const moth = +e.slice(0, 2);
-        if (year < +currentYear) return false;
-        console.log(moth, +currentMoth);
-        if (year === +currentYear && moth < +currentMoth) {
+        if (year === currentYear && month < currentMoth) {
           return false;
         }
         return true;
@@ -252,8 +270,10 @@ const propertyList = {
   range: {
     label: "Donate us",
     id: "Donate",
+    required: true,
   },
 };
+
 const formatCardNumber = (value) => {
   value = value.replace(/\W/gi, "").replace(/(.{4})/g, "$1 ");
   formData.value = { ...formData.value, cardNumber: value.trim() };
@@ -262,39 +282,6 @@ const formatCardNumber = (value) => {
 const validateCardNumber = (e) => {
   e.target.value = e.target.value.replace(/[^\d ]/g, "");
   return false;
-};
-
-const formatExpiration = (value) => {
-  value = value
-    .replace(
-      /^([1-9]\/|[2-9])$/g,
-      "0$1/" // 3 > 03/
-    )
-    .replace(
-      /^(0[1-9]|1[0-2])$/g,
-      "$1/" // 11 > 11/
-    )
-    .replace(
-      /^([0-1])([3-9])$/g,
-      "0$1/$2" // 13 > 01/3
-    )
-    .replace(
-      /^(0?[1-9]|1[0-2])([0-9]{2})$/g,
-      "$1/$2" // 141 > 01/41
-    )
-    .replace(
-      /^([0]+)\/|[0]+$/g,
-      "0" // 0/ > 0 and 00 > 0
-    )
-    .replace(
-      /[^\d/]|^[/]*$/g,
-      "" // To allow only digits and `/`
-    )
-    .replace(
-      /\/\//g,
-      "/" // Prevent entering more than 1 `/`
-    );
-  formData.value = { ...formData.value, expiration: value };
 };
 
 const submitForm = async () => {
@@ -312,6 +299,32 @@ const resetForm = () => {
 </script>
    
 <style>
+.btn {
+  font-weight: 700;
+  font-size: 14px;
+}
+.form-item-payment {
+  height: 100%;
+}
+.form {
+  max-width: 80%;
+}
+input[type="month"] {
+  visibility: hidden;
+  position: absolute;
+  bottom: 0;
+}
+.dp__input {
+  background-color: unset;
+  font-family: unset;
+  transition: unset;
+  line-height: unset;
+  color: unset;
+  padding: 0.5rem 1rem;
+  font-size: 1.25rem;
+  border-radius: 0.5rem;
+  padding-left: 35px;
+}
 </style>
    
    

@@ -1,25 +1,26 @@
-
 <template>
-  <label :for="inputProps.id" class="form-label"
-    >{{ inputProps.label }}
-    <span class="text-require" v-if="inputProps.required">*</span></label
-  >
+  <label :for="inputProps.id" class="form-label">
+    {{ inputProps.label }}
+    <span class="text-require" v-if="inputProps.required">*</span>
+  </label>
+
   <input
     :type="inputProps.type"
-    class="form-control"
+    class="form-control form-control-lg"
     :id="inputProps.id"
     :value="valueInput"
-    @input="$emit('update:valueInput', $event.target.value)"
+    @input="$emit('update:valueInput', $event)"
     v-bind="$attrs"
   />
+
   <div>
-    <span class="error-message" :class="errorMessage ? 'show-error' : ''">{{
-      errorMessage
-    }}</span>
+    <span class="error-message" :class="errorMessage ? 'show-error' : ''">
+      {{ errorMessage }}
+    </span>
   </div>
 </template>
 
-<script >
+<script>
 export default {
   name: "input-vue",
   props: {
@@ -39,5 +40,4 @@ export default {
 };
 </script>
 
-<style scoped>
-</style>
+

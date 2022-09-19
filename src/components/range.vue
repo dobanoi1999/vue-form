@@ -1,5 +1,8 @@
 <template>
-  <label :for="rangeProps.id" class="form-label">{{ rangeProps.label }}</label>
+  <label :for="rangeProps.id" class="form-label">
+    {{ rangeProps.label }}
+    <span class="text-require" v-if="rangeProps.required">*</span>
+  </label>
   <div class="range-container">
     <input
       type="range"
@@ -15,10 +18,8 @@
       <div class="background"></div>
     </div>
     <div class="text-range">
-      <div class="flex">
-        <span> &lt; </span>
-        <span>${{ valueRange }}</span>
-        <span> > </span>
+      <div class="text">
+        <span>{{ `<    $${valueRange}    >` }}</span>
       </div>
     </div>
   </div>
@@ -33,6 +34,7 @@ export default {
     rangeProps: {
       id: String,
       label: String,
+      required: Boolean,
     },
     valueRange: String,
   },
@@ -73,9 +75,8 @@ export default {
 <style scoped>
 input[type="range"]::-webkit-slider-runnable-track {
   background: white;
-
   border: 1px solid gray;
-  height: 0.5rem;
+  height: 6px;
 }
 input[type="range"]::-moz-range-thumb {
   -moz-appearance: none;
@@ -96,7 +97,7 @@ input[type="range"]::-moz-range-thumb {
   position: relative;
   display: flex;
   justify-content: center;
-  height: 2rem;
+  height: 25px;
 }
 .range-container .text-range {
   position: absolute;
@@ -106,24 +107,21 @@ input[type="range"]::-moz-range-thumb {
   width: auto;
   display: flex;
   pointer-events: none;
-}
-.range-container .text-range .flex {
-  align-self: center;
   background: green;
-  pointer-events: none;
-  border-radius: 0.5rem;
-  padding: 0.5rem;
+  border-radius: 4px;
+}
+.text {
   color: white;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 10px;
-  flex-wrap: nowrap;
+  font-weight: 700;
+  font-size: 12px;
+  align-self: center;
+  padding: 0 12px;
+  white-space: pre;
 }
 
 .range-background {
   pointer-events: none;
-  height: 0.5rem;
+  height: 6px;
   width: 100%;
   /* background: red; */
   position: absolute;
