@@ -148,10 +148,12 @@ import Input from "./input.vue";
 import Select from "./select.vue";
 import RadioGroup from "./radioGroup.vue";
 import Range from "./range.vue";
+import Datepicker from "@vuepic/vue-datepicker";
+
 import { computed, ref } from "vue";
 import { required, email, helpers, minLength } from "@vuelidate/validators";
 import useVuelidate from "@vuelidate/core";
-import Datepicker from "@vuepic/vue-datepicker";
+
 import "@vuepic/vue-datepicker/dist/main.css";
 
 const initFormData = {
@@ -187,6 +189,9 @@ const rules = computed(() => {
     },
     phone: {
       required: helpers.withMessage("Phone number is required", required),
+      phoneValid: helpers.withMessage("Phone number is not valid", (value) => {
+        return /(84|0[3|5|7|8|9])+([0-9]{8})\b/g.test(value);
+      }),
     },
     cardNumber: {
       required: helpers.withMessage("Card number is required", required),

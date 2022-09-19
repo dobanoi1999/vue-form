@@ -9,7 +9,9 @@
             src="./assets/img/bg.jpeg"
           />
         </div>
-        <div class="col-8"><Form /></div>
+        <div class="col-8">
+          <Form />
+        </div>
       </div>
     </div>
   </div>

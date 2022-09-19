@@ -19,9 +19,9 @@
           :checked="item.value === valueRadio"
           @input="$emit('update:valueRadio', $event)"
         />
-        <label class="form-check-label" :for="item.value">{{
-          item.name
-        }}</label>
+        <label class="form-check-label" :for="item.value">
+          {{ item.name }}
+        </label>
       </div>
     </div>
   </div>
